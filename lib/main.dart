@@ -6,7 +6,6 @@ import 'package:customer_app/features/order/presentation/bloc/cart_bloc.dart';
 import 'package:customer_app/features/order/presentation/bloc/order_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
           useMaterial3: true,
-          textTheme: GoogleFonts.poppinsTextTheme(),
+          textTheme: ThemeData.light().textTheme,
         ),
         home: const LoginScreen(),
       ),

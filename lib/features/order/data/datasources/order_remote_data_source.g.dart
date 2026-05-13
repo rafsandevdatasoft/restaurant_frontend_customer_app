@@ -14,7 +14,7 @@ class _OrderRemoteDataSource implements OrderRemoteDataSource {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://localhost:8080/api';
+    baseUrl ??= 'http://192.168.240.1:8080/api';
   }
 
   final Dio _dio;
