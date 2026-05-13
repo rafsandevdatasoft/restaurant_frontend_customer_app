@@ -1,0 +1,30 @@
+import 'package:bloc/bloc.dart';
+import 'package:customer_app/features/auth/domain/entities/user.dart';
+import 'package:customer_app/features/auth/domain/usecases/login_usecase.dart';
+import 'package:equatable/equatable.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
+
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final LoginUseCase loginUseCase;
+
+  AuthBloc({required this.loginUseCase}) : super(AuthInitial()) {
+    on<LoginRequested>((event, emit) async {
+      emit(AuthLoading());
+      final result = await loginUseCase(LoginParams(
+        username: event.username,
+        password: event.password,
+      ));
+
+      result.fold(
+        (failure) => emit(AuthError(message: failure.message)),
+        (user) => emit(AuthAuthenticated(user: user)),
+      );
+    });
+
+    on<LogoutRequested>((event, emit) {
+      emit(AuthUnauthenticated());
+    });
+  }
+}
