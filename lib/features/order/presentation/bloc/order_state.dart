@@ -26,3 +26,10 @@ class OrderFailure extends OrderState {
   @override
   List<Object?> get props => [message];
 }
+class OrdersLoaded extends OrderState {
+  final List<OrderModel> orders;
+  const OrdersLoaded(this.orders);
+
+  @override
+  List<Object?> get props => [orders];
+}

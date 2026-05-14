@@ -23,3 +23,4 @@ class PlaceOrderRequested extends OrderEvent {
   @override
   List<Object?> get props => [cartItems, orderType, addressId, specialInstructions];
 }
+class LoadMyOrdersRequested extends OrderEvent {}

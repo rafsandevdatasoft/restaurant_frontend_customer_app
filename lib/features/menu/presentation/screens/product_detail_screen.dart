@@ -1,6 +1,10 @@
 import 'package:customer_app/features/menu/data/models/product_model.dart';
 import 'package:customer_app/features/order/presentation/bloc/cart_bloc.dart';
 import 'package:customer_app/features/order/presentation/screens/cart_screen.dart';
+import 'package:customer_app/features/review/presentation/bloc/review_bloc.dart';
+import 'package:customer_app/features/review/presentation/bloc/review_event.dart';
+import 'package:customer_app/features/review/presentation/bloc/review_state.dart';
+import 'package:customer_app/features/review/presentation/widgets/review_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,6 +92,23 @@ class ProductDetailScreen extends StatelessWidget {
                     title: Text('Extra Toppings'),
                     trailing: Icon(Icons.chevron_right),
                   ),
+                  const SizedBox(height: 32),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Reviews',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton.icon(
+                        onPressed: () => _showReviewDialog(context),
+                        icon: const Icon(Icons.add_comment),
+                        label: const Text('Write a Review'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ReviewListWidget(productId: product.id),
                 ],
               ),
             ),
@@ -118,6 +139,66 @@ class ProductDetailScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           ),
           child: const Text('Add to Cart', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ),
+      ),
+    );
+  }
+
+  void _showReviewDialog(BuildContext context) {
+    int rating = 5;
+    final commentController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Write a Review'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  5,
+                  (index) => IconButton(
+                    onPressed: () => setState(() => rating = index + 1),
+                    icon: Icon(
+                      index < rating ? Icons.star : Icons.star_border,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ),
+              ),
+              TextField(
+                controller: commentController,
+                maxLines: 3,
+                decoration: const InputDecoration(
+                  hintText: 'Share your thoughts...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read<ReviewBloc>().add(SubmitReviewRequested(
+                      productId: product.id,
+                      rating: rating,
+                      comment: commentController.text,
+                    ));
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Review submitted for moderation!')),
+                );
+              },
+              child: const Text('Submit'),
+            ),
+          ],
         ),
       ),
     );

@@ -33,7 +33,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<MenuBloc, MenuState>(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search for food...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+              ),
+              onSubmitted: (value) {
+                // Implement search logic
+              },
+            ),
+          ),
+          Expanded(
+            child: BlocBuilder<MenuBloc, MenuState>(
         builder: (context, state) {
           if (state is MenuLoading) {
             return const Center(child: CircularProgressIndicator());

@@ -1,6 +1,8 @@
 import 'package:customer_app/features/menu/presentation/bloc/menu_bloc.dart';
 import 'package:customer_app/features/menu/presentation/screens/product_detail_screen.dart';
 import 'package:customer_app/features/order/presentation/screens/cart_screen.dart';
+import 'package:customer_app/features/review/presentation/bloc/review_bloc.dart';
+import 'package:customer_app/features/review/presentation/bloc/review_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,6 +61,7 @@ class ProductListScreen extends StatelessWidget {
                       ],
                     ),
                     onTap: () {
+                      context.read<ReviewBloc>().add(LoadProductReviewsRequested(product.id));
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => ProductDetailScreen(product: product),

@@ -1,5 +1,5 @@
 import 'package:customer_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:customer_app/features/menu/presentation/screens/category_screen.dart';
+import 'package:customer_app/features/home/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is AuthAuthenticated) {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => const CategoryScreen()),
+              MaterialPageRoute(builder: (_) => const MainScreen()),
             );
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(

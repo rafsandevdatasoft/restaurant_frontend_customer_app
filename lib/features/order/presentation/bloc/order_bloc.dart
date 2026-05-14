@@ -31,5 +31,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         (order) => emit(OrderSuccess(order)),
       );
     });
+    on<LoadMyOrdersRequested>((event, emit) async {
+      emit(OrderLoading());
+      final result = await repository.getMyOrders();
+      result.fold(
+        (failure) => emit(OrderFailure(failure.message)),
+        (orders) => emit(OrdersLoaded(orders)),
+      );
+    });
   }
 }

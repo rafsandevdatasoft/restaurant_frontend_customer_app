@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.sl<MenuBloc>()),
         BlocProvider(create: (_) => di.sl<CartBloc>()),
         BlocProvider(create: (_) => di.sl<OrderBloc>()),
+        BlocProvider(create: (_) => di.sl<BookingBloc>()),
+        BlocProvider(create: (_) => di.sl<ReviewBloc>()),
       ],
       child: MaterialApp(
         title: 'Restaurant App',
