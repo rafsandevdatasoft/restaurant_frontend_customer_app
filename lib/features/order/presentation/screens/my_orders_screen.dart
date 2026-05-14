@@ -1,7 +1,6 @@
 import 'package:customer_app/features/order/presentation/bloc/order_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -46,7 +45,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(DateFormat('MMM dd, yyyy - hh:mm a').format(order.createdAt!)),
+                        Text(_formatDate(order.createdAt)),
                         const SizedBox(height: 4),
                         Row(
                           children: [
@@ -134,6 +133,18 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         return Colors.red;
       default:
         return Colors.grey;
+    }
+  }
+
+  String _formatDate(String dateStr) {
+    try {
+      final date = DateTime.parse(dateStr);
+      final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      final hour = date.hour > 12 ? date.hour - 12 : date.hour;
+      final amPm = date.hour >= 12 ? 'PM' : 'AM';
+      return '${months[date.month - 1]} ${date.day.toString().padLeft(2, '0')}, ${date.year} - ${hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')} $amPm';
+    } catch (_) {
+      return dateStr;
     }
   }
 }

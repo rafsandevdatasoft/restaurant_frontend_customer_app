@@ -4,6 +4,8 @@ import 'package:customer_app/features/auth/presentation/screens/login_screen.dar
 import 'package:customer_app/features/menu/presentation/bloc/menu_bloc.dart';
 import 'package:customer_app/features/order/presentation/bloc/cart_bloc.dart';
 import 'package:customer_app/features/order/presentation/bloc/order_bloc.dart';
+import 'package:customer_app/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:customer_app/features/review/presentation/bloc/review_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
