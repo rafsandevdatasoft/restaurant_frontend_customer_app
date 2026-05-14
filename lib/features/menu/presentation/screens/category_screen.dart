@@ -56,7 +56,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 contentPadding: const EdgeInsets.symmetric(vertical: 0),
               ),
               onSubmitted: (value) {
-                // Implement search logic
+                if (value.trim().isNotEmpty) {
+                  context.read<MenuBloc>().add(LoadMenuRequested(search: value.trim()));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => ProductListScreen(
+                        categoryId: -1,
+                        categoryName: 'Search: ${value.trim()}',
+                      ),
+                    ),
+                  ).then((_) {
+                    // Reload default menu state when returning from search
+                    context.read<MenuBloc>().add(const LoadMenuRequested());
+                  });
+                }
               },
             ),
           ),
