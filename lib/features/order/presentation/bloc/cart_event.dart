@@ -33,3 +33,13 @@ class UpdateQuantityRequested extends CartEvent {
 }
 
 class ClearCartRequested extends CartEvent {}
+
+class ApplyCouponRequested extends CartEvent {
+  final String code;
+  const ApplyCouponRequested(this.code);
+
+  @override
+  List<Object?> get props => [code];
+}
+
+class RemoveCouponRequested extends CartEvent {}
